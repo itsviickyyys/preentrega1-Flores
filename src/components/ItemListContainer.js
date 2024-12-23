@@ -1,35 +1,36 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Asegúrate de importar Link
 
-
-function ItemListContainer({ products = [], onViewDetails }) {
+function ItemListContainer({ products = [], addToCart }) {
   return (
     <div className="container my-4">
       <h2 className="title">Nuestros Productos</h2>
-      <div className="columns is-multiline">
+      <div className="row">
         {products.length > 0 ? (
           products.map((product) => (
-            <div className="column is-one-third" key={product.id}>
-              <div className="card">
-                <div className="card-image">
-                  <figure className="image is-4by3">
-                    <img src={product.image} alt={product.name} />
-                  </figure>
-                </div>
-                <div className="card-content">
-                  <p className="title is-5">{product.name}</p>
-                  <p className="subtitle is-6">{product.price}</p>
-                  <button
-                    className="button is-primary"
-                    onClick={() => onViewDetails(product.id)}
-                  >
-                    Ver Detalles
-                  </button>
+            <div className="col-md-4 mb-4 d-flex align-items-stretch" key={product.id}>
+              <div className="card h-100"> {/* Clase h-100 para alturas iguales */}
+                <img src={product.image} className="card-img-top" alt={product.name} />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="card-text">Precio: {product.price}</p>
+                  <div className="mt-auto"> {/* Botones alineados al final */}
+                    <Link to={`/product/${product.id}`} className="btn btn-primary">
+                      Ver Detalles
+                    </Link>
+                    <button
+                      className="btn btn-success ms-2"
+                      onClick={() => addToCart(product)}
+                    >
+                      Agregar al Carrito
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="has-text-centered">No hay productos disponibles.</p>
+          <p className="text-center">No hay productos disponibles.</p>
         )}
       </div>
     </div>
@@ -37,3 +38,6 @@ function ItemListContainer({ products = [], onViewDetails }) {
 }
 
 export default ItemListContainer;
+
+
+
