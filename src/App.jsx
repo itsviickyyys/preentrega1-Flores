@@ -46,6 +46,30 @@ function App() {
                     Productos
                   </Link>
                 </li>
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to="#"
+                    id="categoriesDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Categorías
+                  </Link>
+                  <ul className="dropdown-menu" aria-labelledby="categoriesDropdown">
+                    <li>
+                      <Link to="/category/skincare" className="dropdown-item">
+                        Skincare
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/category/makeup" className="dropdown-item">
+                        Makeup
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/cart">
                     Carrito ({cart.length})
@@ -85,6 +109,10 @@ function App() {
               </div>
             }
           />
+          <Route
+            path="/category/:categoryName"
+            element={<ItemListContainer products={products} addToCart={addToCart} />}
+          />
         </Routes>
       </div>
     </Router>
@@ -92,4 +120,3 @@ function App() {
 }
 
 export default App;
-

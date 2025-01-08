@@ -1,4 +1,3 @@
-// Código corregido para la ruta de las imágenes
 import React from "react";
 import { Link } from "react-router-dom";
 import CartWidget from "./CartWidget";
@@ -47,6 +46,42 @@ function Navbar({ url, cartCount }) {
                 Productos
               </Link>
             </li>
+
+            {/* Dropdown Categorías */}
+            <li className="nav-item dropdown">
+              <Link
+                className="nav-link dropdown-toggle"
+                to="#"
+                id="categoriesDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categorías
+              </Link>
+              <ul className="dropdown-menu" aria-labelledby="categoriesDropdown">
+                <li>
+                  <Link to="/categorias/serums" className="dropdown-item">
+                    Serums
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/categorias/cremas" className="dropdown-item">
+                    Cremas
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/categorias/hidratantes" className="dropdown-item">
+                    Hidratantes
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/categorias/proteccion" className="dropdown-item">
+                    Protección Solar
+                  </Link>
+                </li>
+              </ul>
+            </li>
           </ul>
 
           {/* Cart Section */}
@@ -68,4 +103,3 @@ function Navbar({ url, cartCount }) {
 }
 
 export default Navbar;
-
