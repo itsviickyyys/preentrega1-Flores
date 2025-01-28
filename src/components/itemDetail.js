@@ -1,19 +1,19 @@
 import React from "react";
+import ItemQuantitySelector from "./ItemQuantitySelector";
 
-function ItemDetail({ product }) {
+function ItemDetail({ product, addToCart }) {
   return (
-    <div className="card">
-      <img src={product.image} alt={product.name} className="card-img-top" />
-      <div className="card-body">
-        <h5 className="card-title">{product.name}</h5>
-        <p className="card-text">Categoría: {product.category}</p>
-        <p className="card-text">Precio: {product.price}</p>
-      </div>
+    <div className="container my-4">
+      <h2>{product.name}</h2>
+      <img src={product.image} alt={product.name} className="img-fluid mb-3" />
+      <p>Precio: ${product.price.toFixed(2)}</p>
+      <ItemQuantitySelector product={product} addToCart={addToCart} />
     </div>
   );
 }
-
+<ItemQuantitySelector
+  initialQuantity={1}
+  maxQuantity={10}
+  onQuantityChange={(newQuantity) => console.log("Cantidad seleccionada:", newQuantity)}
+/>
 export default ItemDetail;
-
-
-

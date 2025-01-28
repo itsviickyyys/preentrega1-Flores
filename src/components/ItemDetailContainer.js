@@ -1,33 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../config/firebaseConfig";
 
-const mockProducts = [
-  { id: 1, name: "Crema Limpiadora", category: "skincare", price: "$108.990", image: "/img/esteeL.jpg" },
-  { id: 2, name: "Serum The Ordinary", category: "skincare", price: "$38.057,60", image: "/img/THEORD.jpg" },
-  { id: 3, name: "Toallitas Neutrogena", category: "makeup", price: "$4.210,05", image: "/img/Neutrogena.jpg" },
-  { id: 4, name: "Hidratante Facial", category: "skincare", price: "$79.900", image: "/img/UltHia.jpg" },
-  { id: 5, name: "Protector Solar", category: "makeup", price: "$15.000", image: "/img/ProtVichy.jpg" },
-];
-
-function ItemDetailContainer() {
-  const { itemId } = useParams();
+const ItemDetailContainer = ({ addToCart }) => {
+  const { itemId } = useParams(); // ID del producto obtenido de la URL
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const foundProduct = mockProducts.find((product) => product.id === parseInt(itemId));
-    setProduct(foundProduct || null);
+    const fetchProduct = async () => {
+      try {
+        const productRef = doc(db, "products", itemId);
+        const productSnap = await getDoc(productRef);
+
+        if (productSnap.exists()) {
+          setProduct({ id: productSnap.id, ...productSnap.data() });
+        } else {
+          console.error("El producto no existe.");
+        }
+      } catch (error) {
+        console.error("Error al obtener el producto:", error);
+      }
+    };
+
+    fetchProduct();
   }, [itemId]);
 
   return (
     <div className="container my-4">
       {product ? (
-        <ItemDetail product={product} />
+        <div className="card">
+          <img
+            src={product.image}
+            className="card-img-top"
+            alt={product.name}
+          />
+          <div className="card-body">
+            <h5 className="card-title">{product.name}</h5>
+            <p className="card-text">Precio: ${product.price}</p>
+            <p className="card-text">Descripción: {product.description}</p>
+            <p className="card-text">Categoría: {product.category}</p>
+            <button
+              className="btn btn-primary"
+              onClick={() => addToCart(product)}
+            >
+              Agregar al Carrito
+            </button>
+          </div>
+        </div>
       ) : (
-        <h2 className="text-center">Producto no encontrado</h2>
+        <p>Cargando detalles del producto...</p>
       )}
     </div>
   );
-}
+};
 
 export default ItemDetailContainer;
+

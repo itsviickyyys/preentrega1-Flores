@@ -1,21 +1,11 @@
 import React from "react";
 
-function CartWidget({ cartCount }) {
+function CartWidget({ count }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "14px",
-        color: "#292828", // Color del contador
-        fontWeight: "bold",
-      }}
-    >
-      {cartCount}
-    </div>
+    <span className="badge bg-primary ms-2">
+      <i className="bi bi-cart-fill"></i> {count}
+    </span>
   );
 }
 
 export default CartWidget;
-
