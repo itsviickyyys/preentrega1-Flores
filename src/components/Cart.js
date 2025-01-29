@@ -13,13 +13,14 @@ const Cart = ({ cart, setCart }) => {
     <div className="container my-4">
       <h2>Carrito</h2>
       <ul className="list-group mb-4">
-        {cart.map((product) => (
-          <li key={product.id} className="list-group-item">
-            <h5>{product.name}</h5>
-            <p>Precio: ${product.price}</p>
-          </li>
-        ))}
-      </ul>
+  {cart.map((product) => (
+    <li key={product.id} className="list-group-item">
+      <h5>{product.name}</h5>
+      <p>Precio: ${product.price}</p>
+      <p>Cantidad: {product.quantity}</p>
+    </li>
+  ))}
+</ul>
       <h4>Total: ${totalPrice}</h4>
       {cart.length > 0 ? (
         <div>
